@@ -48,7 +48,7 @@ dish_type_prompt = PromptTemplate(
     input_variables=["dish_name"],
     template="""
 Classify the following Indian dish into one of these categories:
-Wet Sabzi, Dry Sabzi, Dal, Non-Veg Curry, Egg Dish, Chicken Dish, Mutton Dish,
+Wet Sabzi, Dry Sabzi, Dal, Veg Curry, Non-Veg Curry, Egg Dish, Chicken Dish, Mutton Dish,
 Fish Dish, Rice Dish, Pulao/Biryani, Roti/Paratha, Chutney, Pickle, Snack, Sweet,
 Dessert, Beverage, Salad, Soup, Breakfast Item, Street Food, South Indian Dish,
 North Indian Dish, Other.

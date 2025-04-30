@@ -7,7 +7,6 @@ from sentence_transformers import SentenceTransformer
 import os
 import logging
 
-# Setup logging
 logging.basicConfig(level=logging.INFO)
 
 # Initialize persistent ChromaDB client
