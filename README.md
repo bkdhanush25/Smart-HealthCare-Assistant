@@ -70,7 +70,7 @@ streamlit run main.py
 Dish: Paneer Butter Masala
 ```
 
-- Dish Type: Non-Veg Curry
+- Dish Type: Veg Curry
 - Ingredients: 200g paneer, 2 tomatoes, 1 onion, 1 tbsp butter, 1 tsp garam masala
 - Total Nutrients: Calories: 739.67 kcal, Protein: 42.28 g, Fat: 41.91 g, Carbs: 47.76 g
 
