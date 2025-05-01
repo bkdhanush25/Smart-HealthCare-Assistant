@@ -1,3 +1,4 @@
+# main.py
 import streamlit as st
 import re
 from vectordb import query_ingredient
@@ -12,13 +13,11 @@ dish_input = st.text_input("Enter Dish Name (e.g., 500g of Paneer Butter Masala)
 
 if st.button("Find Nutrient Details"):
     if dish_input:
-        # Extract quantity and dish name
+        # Extract dish name and quantity
         match = re.match(r"(\d+)\s*g\s*of\s*(.*)", dish_input.strip(), re.IGNORECASE)
         if match:
-            total_quantity = int(match.group(1))
             dish_name = match.group(2).strip()
         else:
-            total_quantity = None
             dish_name = dish_input.strip()
 
         # Extract dish type
@@ -29,7 +28,7 @@ if st.button("Find Nutrient Details"):
         st.success(dish_type)
 
         # Extract ingredients and quantities
-        ingredients, quantities_in_grams = extract_ingredients_from_dish(dish_name)
+        ingredients, quantities_in_grams, total_quantity_extracted = extract_ingredients_from_dish(dish_name)
         ingredients = [i for i in ingredients if isinstance(i, str)]  # Ensure ingredients are strings
 
         # Display identified ingredients
@@ -107,6 +106,35 @@ if st.button("Find Nutrient Details"):
         with nutrition_summary[1]:
             st.markdown("**Total Carbs**")
             st.write(f"**{round(total_nutrition['carbs'], 2)} g**")
+
+        # Calculate nutrition per serving based on total quantity
+        servings = float(total_quantity_extracted)
+        nutrition_per_serving = {
+            "calories": round((180 / servings) * total_nutrition["calories"], 2),
+            "protein": round((180 / servings) * total_nutrition["protein"], 2),
+            "fat": round((180 / servings) * total_nutrition["fat"], 2),
+            "carbs": round((180 / servings) * total_nutrition["carbs"], 2),
+        }
+
+        # Display nutrition per serving
+        st.subheader("Overall Nutritional Information Per Serving:")
+        nutrition_summary_per_serving = st.columns(2)
+
+        with nutrition_summary_per_serving[0]:
+            st.markdown("**Calories**")
+            st.write(f"**{round(nutrition_per_serving['calories'], 2)} kcal**")
+
+        with nutrition_summary_per_serving[1]:
+            st.markdown("**Protein**")
+            st.write(f"**{round(nutrition_per_serving['protein'], 2)} g**")
+
+        with nutrition_summary_per_serving[0]:
+            st.markdown("**Fat**")
+            st.write(f"**{round(nutrition_per_serving['fat'], 2)} g**")
+
+        with nutrition_summary_per_serving[1]:
+            st.markdown("**Carbs**")
+            st.write(f"**{round(nutrition_per_serving['carbs'], 2)} g**")
 
     else:
         st.warning("Please enter a dish name.")
